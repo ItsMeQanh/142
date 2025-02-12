@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liverpool Love Treasure Hunt</title>
+    <title>Mission LovePossible: An Interactive Treasure Hunt</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             background-color: #f8f9fa;
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: auto;
             background: white;
             padding: 20px;
@@ -35,47 +35,119 @@
         button:hover {
             background-color: #ff4757;
         }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .drag-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .draggable {
+            padding: 10px;
+            background: #ff6b81;
+            color: white;
+            margin: 5px;
+            cursor: grab;
+            border-radius: 5px;
+        }
+        .dropzone {
+            width: 150px;
+            height: 50px;
+            background: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌹 Liverpool Love Treasure Hunt 🌹</h1>
-        <p>Welcome, my love! Your adventure begins now. Follow each clue to discover surprises along the way. 💖</p>
+        <h1>🌹 Mission LovePossible 🌹</h1>
+        <p>Welcome, Agent Rose. Your mission is to uncover the secrets of love through these puzzles.</p>
         
         <div id="step1">
-            <h2>📍 Step 1: The First Bloom</h2>
-            <p>💡 Clue: "Where colors bloom and fragrances dance, a gift of love awaits your glance."</p>
-            <p>Head to <b>[Flower Shop Name]</b> at <b>[Location]</b> to pick up your special bouquet. Ask for <b>"[Special Code Name]"</b> and receive your next clue.</p>
-            <button onclick="nextStep('step2')">I got the flowers! 💐</button>
+            <h2>📍 Step 1: The Spy Desk</h2>
+            <p>Click the right object to reveal your clue:</p>
+            <img src="https://via.placeholder.com/600x300" usemap="#objects">
+            <map name="objects">
+                <area shape="rect" coords="50,50,150,150" onclick="showStep('step2')" alt="Notebook" title="Notebook (Click to open!)">
+                <area shape="rect" coords="200,50,300,150" onclick="alert('No clue here! Try again.')" alt="Coffee Cup">
+            </map>
         </div>
         
         <div id="step2" class="hidden">
-            <h2>📍 Step 2: A Warm Meal Awaits</h2>
-            <p>💡 Clue: "Near the blooms you now hold tight, find a place that serves delight."</p>
-            <p>Your next stop is <b>[Restaurant Name]</b> at <b>[Location]</b>. A table is reserved just for you, and the waiter has a little note from me. Enjoy your meal! 🍽️</p>
-            <button onclick="nextStep('step3')">I'm ready for the next clue! 🍷</button>
+            <h2>📍 Step 2: The Scrambled Word Challenge</h2>
+            <p>Unscramble this word: "R E T U S A N A T"</p>
+            <input type="text" id="scrambleInput">
+            <button onclick="checkScramble()">Submit</button>
         </div>
         
         <div id="step3" class="hidden">
-            <h2>📍 Step 3: A Sweet Surprise</h2>
-            <p>💡 Clue: "In a city of music and sea, find a place that reminds you of me."</p>
-            <p>Go to <b>[Café or Scenic Location]</b>, where something sweet is waiting for you. Show this message, and they’ll know exactly what to do. 😉</p>
-            <button onclick="nextStep('finalStep')">What's next? 🎁</button>
+            <h2>📍 Step 3: Drag & Drop Challenge</h2>
+            <p>Drag the letters into the correct order to spell a clue:</p>
+            <div class="drag-container">
+                <div class="draggable" draggable="true" id="L">L</div>
+                <div class="draggable" draggable="true" id="O">O</div>
+                <div class="draggable" draggable="true" id="V">V</div>
+                <div class="draggable" draggable="true" id="E">E</div>
+            </div>
+            <div class="dropzone" id="dropzone"></div>
+            <button onclick="checkDragDrop()">Check</button>
         </div>
-        
+
         <div id="finalStep" class="hidden">
-            <h2>🌟 The Grand Finale: A Message from Me</h2>
-            <p>💌 Surprise: When you arrive, scan the QR code at the final location to receive a special **video message from me**. Look around, take in the moment, and know that I’m right there with you in spirit. ❤️</p>
-            <p>I love you, and I can’t wait to hear about your adventure.</p>
-            <h3>Forever yours,</h3>
-            <h2>[Your Name] 💖</h2>
+            <h2>🌟 The Grand Finale</h2>
+            <p>💌 You’ve completed your mission, Agent Rose! Your final reward: <a href="#">Watch your surprise video here! 🎥</a></p>
         </div>
     </div>
     
     <script>
-        function nextStep(stepId) {
+        function showStep(stepId) {
             document.getElementById(stepId).classList.remove("hidden");
         }
+
+        function checkScramble() {
+            let userAnswer = document.getElementById("scrambleInput").value.toLowerCase().trim();
+            if (userAnswer === "restaurant") {
+                showStep("step3");
+            } else {
+                alert("Oops! Try again, love 💖.");
+            }
+        }
+
+        function checkDragDrop() {
+            let dropZone = document.getElementById("dropzone").innerText.trim().toUpperCase();
+            if (dropZone === "LOVE") {
+                showStep("finalStep");
+            } else {
+                alert("Not quite! Arrange the letters correctly.");
+            }
+        }
+
+        document.querySelectorAll(".draggable").forEach(item => {
+            item.addEventListener("dragstart", event => {
+                event.dataTransfer.setData("text", event.target.id);
+            });
+        });
+
+        document.getElementById("dropzone").addEventListener("dragover", event => {
+            event.preventDefault();
+        });
+
+        document.getElementById("dropzone").addEventListener("drop", event => {
+            event.preventDefault();
+            let data = event.dataTransfer.getData("text");
+            event.target.appendChild(document.getElementById(data));
+        });
     </script>
 </body>
 </html>
