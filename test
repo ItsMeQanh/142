@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liverpool Love Treasure Hunt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌹 Liverpool Love Treasure Hunt 🌹</h1>
+        <p>Welcome, my love! Your adventure begins now. Follow each clue to discover surprises along the way. 💖</p>
+        
+        <div id="step1">
+            <h2>📍 Step 1: The First Bloom</h2>
+            <p>💡 Clue: "Where colors bloom and fragrances dance, a gift of love awaits your glance."</p>
+            <p>Head to <b>[Flower Shop Name]</b> at <b>[Location]</b> to pick up your special bouquet. Ask for <b>"[Special Code Name]"</b> and receive your next clue.</p>
+            <button onclick="nextStep('step2')">I got the flowers! 💐</button>
+        </div>
+        
+        <div id="step2" class="hidden">
+            <h2>📍 Step 2: A Warm Meal Awaits</h2>
+            <p>💡 Clue: "Near the blooms you now hold tight, find a place that serves delight."</p>
+            <p>Your next stop is <b>[Restaurant Name]</b> at <b>[Location]</b>. A table is reserved just for you, and the waiter has a little note from me. Enjoy your meal! 🍽️</p>
+            <button onclick="nextStep('step3')">I'm ready for the next clue! 🍷</button>
+        </div>
+        
+        <div id="step3" class="hidden">
+            <h2>📍 Step 3: A Sweet Surprise</h2>
+            <p>💡 Clue: "In a city of music and sea, find a place that reminds you of me."</p>
+            <p>Go to <b>[Café or Scenic Location]</b>, where something sweet is waiting for you. Show this message, and they’ll know exactly what to do. 😉</p>
+            <button onclick="nextStep('finalStep')">What's next? 🎁</button>
+        </div>
+        
+        <div id="finalStep" class="hidden">
+            <h2>🌟 The Grand Finale: A Message from Me</h2>
+            <p>💌 Surprise: When you arrive, scan the QR code at the final location to receive a special **video message from me**. Look around, take in the moment, and know that I’m right there with you in spirit. ❤️</p>
+            <p>I love you, and I can’t wait to hear about your adventure.</p>
+            <h3>Forever yours,</h3>
+            <h2>[Your Name] 💖</h2>
+        </div>
+    </div>
+    
+    <script>
+        function nextStep(stepId) {
+            document.getElementById(stepId).classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
