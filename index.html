@@ -3,150 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission LovePossible: An Interactive Treasure Hunt</title>
+    <title>Mission LovePossible 💖</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             text-align: center;
-            background-color: #f8f9fa;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
             padding: 20px;
+            color: white;
         }
         .container {
             max-width: 700px;
             margin: auto;
-            background: white;
+            background: rgba(255, 255, 255, 0.2);
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; opacity: 0; transition: opacity 1s ease-in-out; }
+        .fade-in { opacity: 1 !important; }
         button {
             background-color: #ff6b81;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             margin: 10px;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
+            transition: background 0.3s;
         }
-        button:hover {
-            background-color: #ff4757;
-        }
-        input {
-            padding: 10px;
-            width: 80%;
-            margin: 10px 0;
-        }
-        img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .drag-container {
+        button:hover { background-color: #ff4757; }
+        .drag-container, .dropzone {
             display: flex;
             justify-content: center;
+            gap: 10px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         .draggable {
-            padding: 10px;
-            background: #ff6b81;
-            color: white;
-            margin: 5px;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
             cursor: grab;
-            border-radius: 5px;
+            border-radius: 10px;
+            border: 3px solid #ff6b81;
         }
         .dropzone {
-            width: 150px;
-            height: 50px;
-            background: lightgray;
+            width: 650px;
+            height: 140px;
+            background: white;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 5px;
-            border-radius: 5px;
+            justify-content: space-around;
+            margin: 10px auto;
+            border-radius: 10px;
+            border: 3px dashed #ff6b81;
+            padding: 10px;
+        }
+        #countdown {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🌹 Mission LovePossible 🌹</h1>
-        <p>Welcome, Agent Rose. Your mission is to uncover the secrets of love through these puzzles.</p>
+        <button id="startButton">Start Mission</button>
         
-        <div id="step1">
-            <h2>📍 Step 1: The Spy Desk</h2>
-            <p>Click the right object to reveal your clue:</p>
-            <img src="https://via.placeholder.com/600x300" usemap="#objects">
-            <map name="objects">
-                <area shape="rect" coords="50,50,150,150" onclick="showStep('step2')" alt="Notebook" title="Notebook (Click to open!)">
-                <area shape="rect" coords="200,50,300,150" onclick="alert('No clue here! Try again.')" alt="Coffee Cup">
-            </map>
+        <div id="step1" class="hidden">
+            <h2>🧩 Arrange the Memories in Order</h2>
+            <p>Drag the images to arrange them from <strong>earliest to most recent</strong>.</p>
+            <div class="drag-container" id="dragContainer">
+                <img src="https://i.imgur.com/ElyoeuY.jpg" class="draggable" draggable="true" id="img1">
+                <img src="https://i.imgur.com/vzTHQ6x.jpg" class="draggable" draggable="true" id="img2">
+                <img src="https://i.imgur.com/CbSEc2K.jpg" class="draggable" draggable="true" id="img3">
+                <img src="https://i.imgur.com/EaXm3NR.jpg" class="draggable" draggable="true" id="img4">
+            </div>
+            <div class="dropzone" id="dropzone"></div>
+            <button id="checkOrderButton">Check Order</button>
         </div>
         
         <div id="step2" class="hidden">
-            <h2>📍 Step 2: The Scrambled Word Challenge</h2>
-            <p>Unscramble this word: "R E T U S A N A T"</p>
-            <input type="text" id="scrambleInput">
-            <button onclick="checkScramble()">Submit</button>
-        </div>
-        
-        <div id="step3" class="hidden">
-            <h2>📍 Step 3: Drag & Drop Challenge</h2>
-            <p>Drag the letters into the correct order to spell a clue:</p>
-            <div class="drag-container">
-                <div class="draggable" draggable="true" id="L">L</div>
-                <div class="draggable" draggable="true" id="O">O</div>
-                <div class="draggable" draggable="true" id="V">V</div>
-                <div class="draggable" draggable="true" id="E">E</div>
-            </div>
-            <div class="dropzone" id="dropzone"></div>
-            <button onclick="checkDragDrop()">Check</button>
+            <h2>🔢 Answer the Riddle</h2>
+            <p>What year did our love start?</p>
+            <input type="text" id="yearAnswer">
+            <button id="checkYearButton">Submit</button>
         </div>
 
-        <div id="finalStep" class="hidden">
-            <h2>🌟 The Grand Finale</h2>
-            <p>💌 You’ve completed your mission, Agent Rose! Your final reward: <a href="#">Watch your surprise video here! 🎥</a></p>
+        <div id="step3" class="hidden">
+            <p>What’s the best number to go with 23?</p>
+            <input type="text" id="numberAnswer">
+            <button id="checkNumberButton">Submit</button>
+        </div>
+
+        <div id="countdownContainer" class="hidden">
+            <h2>⏳ Countdown to 10 AM Liverpool Time</h2>
+            <p id="countdown"></p>
         </div>
     </div>
     
     <script>
-        function showStep(stepId) {
-            document.getElementById(stepId).classList.remove("hidden");
-        }
+        document.getElementById("startButton").addEventListener("click", function() {
+            document.getElementById("step1").classList.remove("hidden");
+            setTimeout(() => document.getElementById("step1").classList.add("fade-in"), 50);
+        });
 
-        function checkScramble() {
-            let userAnswer = document.getElementById("scrambleInput").value.toLowerCase().trim();
-            if (userAnswer === "restaurant") {
-                showStep("step3");
-            } else {
-                alert("Oops! Try again, love 💖.");
-            }
-        }
+        let correctOrder = ["img1", "img2", "img3", "img4"];
+        let dropZone = document.getElementById("dropzone");
+        let draggedItem = null;
 
-        function checkDragDrop() {
-            let dropZone = document.getElementById("dropzone").innerText.trim().toUpperCase();
-            if (dropZone === "LOVE") {
-                showStep("finalStep");
-            } else {
-                alert("Not quite! Arrange the letters correctly.");
-            }
-        }
-
-        document.querySelectorAll(".draggable").forEach(item => {
-            item.addEventListener("dragstart", event => {
-                event.dataTransfer.setData("text", event.target.id);
+        document.querySelectorAll(".draggable").forEach(img => {
+            img.addEventListener("dragstart", event => {
+                draggedItem = event.target;
             });
         });
 
-        document.getElementById("dropzone").addEventListener("dragover", event => {
+        dropZone.addEventListener("dragover", event => {
             event.preventDefault();
         });
 
-        document.getElementById("dropzone").addEventListener("drop", event => {
+        dropZone.addEventListener("drop", event => {
             event.preventDefault();
-            let data = event.dataTransfer.getData("text");
-            event.target.appendChild(document.getElementById(data));
+            if (draggedItem) {
+                dropZone.appendChild(draggedItem);
+                draggedItem = null;
+            }
+        });
+
+        document.getElementById("checkOrderButton").addEventListener("click", function() {
+            let placedImages = Array.from(dropZone.children).map(img => img.id);
+            if (placedImages.length !== 4) {
+                alert("Try again babi! Arrange all images first.");
+                return;
+            }
+            let orderCorrect = placedImages.every((id, index) => id === correctOrder[index]);
+            if (orderCorrect) {
+                document.getElementById("step2").classList.remove("hidden");
+                setTimeout(() => document.getElementById("step2").classList.add("fade-in"), 50);
+            } else {
+                alert("Try again babi!");
+            }
+        });
+
+        document.getElementById("checkYearButton").addEventListener("click", function() {
+            let year = document.getElementById("yearAnswer").value.trim();
+            if (year === "2023") {
+                document.getElementById("step3").classList.remove("hidden");
+                setTimeout(() => document.getElementById("step3").classList.add("fade-in"), 50);
+            } else {
+                alert("Try again babi!");
+            }
+        });
+
+        document.getElementById("checkNumberButton").addEventListener("click", function() {
+            let number = document.getElementById("numberAnswer").value.trim();
+            if (number === "7") {
+                document.getElementById("countdownContainer").classList.remove("hidden");
+                setTimeout(() => document.getElementById("countdownContainer").classList.add("fade-in"), 50);
+            } else {
+                alert("Try again babi!");
+            }
         });
     </script>
 </body>
