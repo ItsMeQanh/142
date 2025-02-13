@@ -78,13 +78,14 @@
             <h2>🧩 Arrange the Memories in Order</h2>
             <p>Drag the images to arrange them from <strong>earliest to most recent</strong>.</p>
             <div class="drag-container" id="dragContainer">
-                <img src="https://i.imgur.com/ElyoeuY.jpg" class="draggable" draggable="true" id="img1">
-                <img src="https://i.imgur.com/vzTHQ6x.jpg" class="draggable" draggable="true" id="img2">
-                <img src="https://i.imgur.com/CbSEc2K.jpg" class="draggable" draggable="true" id="img3">
-                <img src="https://i.imgur.com/EaXm3NR.jpg" class="draggable" draggable="true" id="img4">
+                <img src="https://i.imgur.com/ElyoeuY.jpg" class="draggable" draggable="true" id="img4">
+                <img src="https://i.imgur.com/vzTHQ6x.jpg" class="draggable" draggable="true" id="img3">
+                <img src="https://i.imgur.com/CbSEc2K.jpg" class="draggable" draggable="true" id="img2">
+                <img src="https://i.imgur.com/EaXm3NR.jpg" class="draggable" draggable="true" id="img1">
             </div>
             <div class="dropzone" id="dropzone"></div>
             <button id="checkOrderButton">Check Order</button>
+            <button id="resetButton">Retry</button>
         </div>
         
         <div id="step2" class="hidden">
@@ -112,7 +113,7 @@
             setTimeout(() => document.getElementById("step1").classList.add("fade-in"), 50);
         });
 
-        let correctOrder = ["img1", "img2", "img3", "img4"];
+        let correctOrder = ["img4", "img3", "img2", "img1"];
         let dropZone = document.getElementById("dropzone");
         let draggedItem = null;
 
@@ -136,8 +137,6 @@
 
         document.getElementById("checkOrderButton").addEventListener("click", function() {
             let placedImages = Array.from(dropZone.children).map(img => img.id);
-            console.log("Placed Order:", placedImages);
-            console.log("Correct Order:", correctOrder);
             if (placedImages.length !== 4) {
                 alert("Try again babi! Arrange all images first.");
                 return;
@@ -149,6 +148,11 @@
             } else {
                 alert("Try again babi!");
             }
+        });
+
+        document.getElementById("resetButton").addEventListener("click", function() {
+            dropZone.innerHTML = "";
+            document.getElementById("dragContainer").append(...document.querySelectorAll(".draggable"));
         });
     </script>
 </body>
