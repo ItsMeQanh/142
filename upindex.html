@@ -130,7 +130,7 @@
         dropZone.addEventListener("drop", event => {
             event.preventDefault();
             if (draggedItem) {
-                dropZone.appendChild(draggedItem);
+                event.target.appendChild(draggedItem);
                 draggedItem = null;
             }
         });
@@ -153,7 +153,10 @@
 
         document.getElementById("resetButton").addEventListener("click", function() {
             dropZone.innerHTML = "";
-            document.getElementById("dragContainer").append(...document.querySelectorAll(".draggable"));
+            let dragContainer = document.getElementById("dragContainer");
+            document.querySelectorAll(".draggable").forEach(img => {
+                dragContainer.appendChild(img);
+            });
         });
     </script>
 </body>
