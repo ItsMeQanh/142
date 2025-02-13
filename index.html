@@ -161,48 +161,54 @@
             }
         });
 
-        // Step 2 and 3 Script
-        document.getElementById("checkYearButton").addEventListener("click", function() {
-            let answer = document.getElementById("yearAnswer").value.trim();
-            if (answer === "2023") {
-                document.getElementById("step3").classList.remove("hidden");
-                setTimeout(() => document.getElementById("step3").classList.add("fade-in"), 50);
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-        document.getElementById("checkNumberButton").addEventListener("click", function() {
-            let answer = document.getElementById("numberAnswer").value.trim();
-            if (answer === "7") {
-                document.getElementById("countdownContainer").classList.remove("hidden");
-                setTimeout(() => document.getElementById("countdownContainer").classList.add("fade-in"), 50);
-                startCountdown();
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-        function startCountdown() {
-            const eventDate = new Date("February 14, 2025 10:00:00 GMT").getTime();
-            const countdownElement = document.getElementById("countdown");
-            
-            const timer = setInterval(() => {
-                let now = new Date().getTime();
-                let timeLeft = eventDate - now;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    countdownElement.innerHTML = "🚀 The Treasure Hunt Begins Now! 🎉";
-                } else {
-                    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-                }
-            }, 1000);
+        <script>
+    // Step 2 and 3 Script
+    document.getElementById("checkYearButton").addEventListener("click", function() {
+        let answer = document.getElementById("yearAnswer").value.trim();
+        if (answer === "2023") {
+            document.getElementById("step3").classList.remove("hidden");
+            setTimeout(() => document.getElementById("step3").classList.add("fade-in"), 50);
+        } else {
+            alert("Try again babi!");
         }
-    </script>
-</body>
-</html>
+    });
+
+    document.getElementById("checkNumberButton").addEventListener("click", function() {
+        let answer = document.getElementById("numberAnswer").value.trim();
+        if (answer === "7") {
+            document.getElementById("countdownContainer").classList.remove("hidden");
+            setTimeout(() => document.getElementById("countdownContainer").classList.add("fade-in"), 50);
+            startCountdown();
+        } else {
+            alert("Try again babi!");
+        }
+    });
+
+    function startCountdown() {
+        const eventDate = new Date("February 14, 2025 10:00:00 GMT").getTime();
+        const countdownElement = document.getElementById("countdown");
+        
+        const timer = setInterval(() => {
+            let now = new Date().getTime();
+            let timeLeft = eventDate - now;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                countdownElement.innerHTML = `
+                    💌 Happy Valentine’s Day, my love!  
+                    At 10 AM tomorrow, a secret journey awaits.  
+                    Click <a href="#">this link</a> to find your first clue and the start of a wonderful day together.  
+                    You mean everything to me, and I can’t wait to make this day as special as you are.  
+                    With all my heart,  
+                    Yours forever.
+                `;
+            } else {
+                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }, 1000);
+    }
+</script>
