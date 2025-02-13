@@ -136,34 +136,16 @@
 
         document.getElementById("checkOrderButton").addEventListener("click", function() {
             let placedImages = Array.from(dropZone.children).map(img => img.id);
+            console.log("Placed Order:", placedImages);
+            console.log("Correct Order:", correctOrder);
             if (placedImages.length !== 4) {
                 alert("Try again babi! Arrange all images first.");
                 return;
             }
-            let orderCorrect = placedImages.every((id, index) => id === correctOrder[index]);
+            let orderCorrect = JSON.stringify(placedImages) === JSON.stringify(correctOrder);
             if (orderCorrect) {
                 document.getElementById("step2").classList.remove("hidden");
                 setTimeout(() => document.getElementById("step2").classList.add("fade-in"), 50);
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-        document.getElementById("checkYearButton").addEventListener("click", function() {
-            let year = document.getElementById("yearAnswer").value.trim();
-            if (year === "2023") {
-                document.getElementById("step3").classList.remove("hidden");
-                setTimeout(() => document.getElementById("step3").classList.add("fade-in"), 50);
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-        document.getElementById("checkNumberButton").addEventListener("click", function() {
-            let number = document.getElementById("numberAnswer").value.trim();
-            if (number === "7") {
-                document.getElementById("countdownContainer").classList.remove("hidden");
-                setTimeout(() => document.getElementById("countdownContainer").classList.add("fade-in"), 50);
             } else {
                 alert("Try again babi!");
             }
