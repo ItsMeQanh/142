@@ -187,13 +187,13 @@
     const eventDate = new Date("February 14, 2025 10:00:00 GMT").getTime();
     const countdownElement = document.getElementById("countdown");
 
-    // Romantic, immersive countdown UI
+    // Updated contrast-friendly romantic UI
     countdownElement.innerHTML = `
         <div style="text-align: center; padding: 30px; position: relative;">
-            <p style="font-size: 28px; font-weight: bold; color: #ffd700; text-shadow: 2px 2px 6px rgba(255, 215, 0, 0.8);">
+            <p style="font-size: 28px; font-weight: bold; color: #ffd700; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);">
                 💖 The Most Beautiful Moment is Coming...  
             </p>
-            <p style="font-size: 20px; color: white; max-width: 600px; margin: auto;">
+            <p style="font-size: 20px; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); max-width: 600px; margin: auto;">
                 At <span style="color: #ffcccb; font-weight: bold;">10 AM tomorrow</span>, the journey begins.  
                 I have prepared something special just for you.  
                 **Come back here when the time arrives!**  
@@ -201,7 +201,7 @@
             
             <div style="margin-top: 30px; display: flex; justify-content: center; align-items: center;">
                 <div id="countdown-box" style="
-                    background: rgba(255, 255, 255, 0.1);
+                    background: rgba(0, 0, 0, 0.2);
                     padding: 20px 30px;
                     border-radius: 20px;
                     display: inline-block;
@@ -210,19 +210,19 @@
                     position: relative;
                     overflow: hidden;
                 ">
-                    <p style="font-size: 22px; color: #ffcccb; font-style: italic; margin-bottom: 10px;">
+                    <p style="font-size: 22px; color: #ffd700; font-style: italic; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">
                         🌟 Countdown to Our Special Moment 🌟
                     </p>
                     <p id="timeRemaining" style="
                         font-size: 50px; 
                         font-weight: bold; 
-                        color: white; 
-                        text-shadow: 3px 3px 10px rgba(255, 105, 180, 0.9);
+                        color: #ffffff; 
+                        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
                     "></p>
                 </div>
             </div>
 
-            <p style="font-size: 18px; color: white; margin-top: 30px;">
+            <p style="font-size: 18px; color: #ffffff; font-weight: bold; margin-top: 30px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">
                 **This page will be your gateway to a magical surprise...**  
             </p>
             
@@ -239,7 +239,7 @@
 
     const timeRemaining = document.getElementById("timeRemaining");
 
-    // Glowing heart animation effect (Optional)
+    // Glowing animation effect (subtle pulsing)
     document.getElementById("countdown-box").style.animation = "pulse 1.5s infinite alternate";
 
     // Countdown logic
@@ -261,14 +261,15 @@
             let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
             timeRemaining.innerHTML = `
-                <span style="color: #ff69b4;">${days}</span>d  
-                <span style="color: #ffcccb;">${hours}</span>h  
-                <span style="color: #ffd700;">${minutes}</span>m  
-                <span style="color: #ff1493;">${seconds}</span>s  
+                <span style="color: #ff4747; font-weight: bold;">${days}</span>d  
+                <span style="color: #ffcc00; font-weight: bold;">${hours}</span>h  
+                <span style="color: #ff9f00; font-weight: bold;">${minutes}</span>m  
+                <span style="color: #ff1493; font-weight: bold;">${seconds}</span>s  
             `;
         }
     }, 1000);
 }
+
 
 
 
