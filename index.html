@@ -130,23 +130,24 @@
         dropZone.addEventListener("drop", event => {
             event.preventDefault();
             if (draggedItem) {
-                dropZone.appendChild(draggedItem);
+                event.target.appendChild(draggedItem);
                 draggedItem = null;
             }
         });
 
         document.getElementById("checkOrderButton").addEventListener("click", function() {
             let placedImages = Array.from(dropZone.children).map(img => img.id);
+            console.log("Placed Images:", placedImages);
+            console.log("Expected Order:", correctOrder);
             if (placedImages.length !== 4) {
                 alert("Try again babi! Arrange all images first.");
                 return;
             }
-            let orderCorrect = JSON.stringify(placedImages) === JSON.stringify(correctOrder);
-            if (orderCorrect) {
+            if (JSON.stringify(placedImages) === JSON.stringify(correctOrder)) {
                 document.getElementById("step2").classList.remove("hidden");
                 setTimeout(() => document.getElementById("step2").classList.add("fade-in"), 50);
             } else {
-                alert("Try again babi!");
+                alert("Try again babi! The order is incorrect.");
             }
         });
 
