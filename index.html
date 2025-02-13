@@ -35,6 +35,15 @@
             transition: background 0.3s;
         }
         button:hover { background-color: #ff4757; }
+        input {
+            padding: 12px;
+            width: 80%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            text-align: center;
+        }
         .draggable {
             width: 120px;
             height: 120px;
@@ -58,10 +67,15 @@
             padding: 10px;
         }
         #countdown {
-            font-size: 30px;
+            font-size: 40px;
             font-weight: bold;
             margin-top: 20px;
             color: yellow;
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
     </style>
 </head>
@@ -70,6 +84,7 @@
         <h1>🌹 Mission LovePossible 🌹</h1>
         <button id="startButton">Start Mission</button>
         
+        <!-- Step 1 -->
         <div id="step1" class="hidden">
             <h2>🧩 Arrange the Memories in Order</h2>
             <p>Drag the images to arrange them from <strong>earliest to most recent</strong>.</p>
@@ -84,26 +99,30 @@
             <button id="resetButton">Retry</button>
         </div>
         
+        <!-- Step 2 -->
         <div id="step2" class="hidden">
             <h2>🔢 Answer the Riddle</h2>
             <p>What year did our love start?</p>
-            <input type="text" id="yearAnswer">
+            <input type="text" id="yearAnswer" placeholder="Enter the year">
             <button id="checkYearButton">Submit</button>
         </div>
 
+        <!-- Step 3 -->
         <div id="step3" class="hidden">
             <p>What’s the best number to go with 23?</p>
-            <input type="text" id="numberAnswer">
+            <input type="text" id="numberAnswer" placeholder="Enter the number">
             <button id="checkNumberButton">Submit</button>
         </div>
 
+        <!-- Countdown -->
         <div id="countdownContainer" class="hidden">
             <h2>⏳ Countdown to 10 AM Liverpool Time</h2>
-            <p id="countdown">The treasure hunt begins soon... Get ready! 🕵️‍♂️💖</p>
+            <p id="countdown">Loading...</p>
         </div>
     </div>
     
     <script>
+        // Step 1 Script
         document.getElementById("startButton").addEventListener("click", function() {
             document.getElementById("step1").classList.remove("hidden");
             setTimeout(() => document.getElementById("step1").classList.add("fade-in"), 50);
@@ -113,6 +132,7 @@
         document.querySelectorAll(".draggable").forEach(img => {
             img.addEventListener("dragstart", event => {
                 draggedItem = event.target;
+                event.dataTransfer.setData("text", event.target.id);
             });
         });
 
@@ -123,16 +143,25 @@
 
         dropZone.addEventListener("drop", event => {
             event.preventDefault();
-            if (draggedItem) {
-                dropZone.appendChild(draggedItem);
-                draggedItem = null;
+            let droppedId = event.dataTransfer.getData("text");
+            let droppedItem = document.getElementById(droppedId);
+            if (droppedItem) {
+                dropZone.appendChild(droppedItem);
             }
         });
 
-        document.getElementById("resetButton").addEventListener("click", function() {
-            document.getElementById("dragContainer").append(...dropZone.children);
+        document.getElementById("checkOrderButton").addEventListener("click", function() {
+            let correctOrder = ["img1", "img2", "img3", "img4"];
+            let placedImages = Array.from(dropZone.children).map(img => img.id);
+            if (JSON.stringify(placedImages) === JSON.stringify(correctOrder)) {
+                document.getElementById("step2").classList.remove("hidden");
+                setTimeout(() => document.getElementById("step2").classList.add("fade-in"), 50);
+            } else {
+                alert("Try again babi!");
+            }
         });
 
+        // Step 2 and 3 Script
         document.getElementById("checkYearButton").addEventListener("click", function() {
             let answer = document.getElementById("yearAnswer").value.trim();
             if (answer === "2023") {
@@ -155,18 +184,22 @@
         });
 
         function startCountdown() {
-            let countdownElement = document.getElementById("countdown");
-            let targetDate = new Date("February 14, 2025 10:00:00").getTime();
-            let interval = setInterval(function() {
+            const eventDate = new Date("February 14, 2025 10:00:00 GMT").getTime();
+            const countdownElement = document.getElementById("countdown");
+            
+            const timer = setInterval(() => {
                 let now = new Date().getTime();
-                let distance = targetDate - now;
-                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                countdownElement.innerHTML = `⏳ ${hours}h ${minutes}m ${seconds}s until the adventure begins!`;
-                if (distance < 0) {
-                    clearInterval(interval);
-                    countdownElement.innerHTML = "🎉 The treasure hunt begins now! 🎉";
+                let timeLeft = eventDate - now;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    countdownElement.innerHTML = "🚀 The Treasure Hunt Begins Now! 🎉";
+                } else {
+                    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
                 }
             }, 1000);
         }
