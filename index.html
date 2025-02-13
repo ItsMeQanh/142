@@ -35,13 +35,6 @@
             transition: background 0.3s;
         }
         button:hover { background-color: #ff4757; }
-        .drag-container, .dropzone {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
         .draggable {
             width: 120px;
             height: 120px;
@@ -51,13 +44,15 @@
             border: 3px solid #ff6b81;
         }
         .dropzone {
-            width: 650px;
-            height: 140px;
-            background: white;
             display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            width: 650px;
+            height: 150px;
+            background: white;
             align-items: center;
-            justify-content: space-around;
-            margin: 10px auto;
             border-radius: 10px;
             border: 3px dashed #ff6b81;
             padding: 10px;
@@ -66,6 +61,7 @@
             font-size: 30px;
             font-weight: bold;
             margin-top: 20px;
+            color: yellow;
         }
     </style>
 </head>
@@ -103,7 +99,7 @@
 
         <div id="countdownContainer" class="hidden">
             <h2>⏳ Countdown to 10 AM Liverpool Time</h2>
-            <p id="countdown"></p>
+            <p id="countdown">The treasure hunt begins soon... Get ready! 🕵️‍♂️💖</p>
         </div>
     </div>
     
@@ -113,16 +109,14 @@
             setTimeout(() => document.getElementById("step1").classList.add("fade-in"), 50);
         });
 
-        let correctOrder = ["img1", "img2", "img3", "img4"];
-        let dropZone = document.getElementById("dropzone");
         let draggedItem = null;
-
         document.querySelectorAll(".draggable").forEach(img => {
             img.addEventListener("dragstart", event => {
                 draggedItem = event.target;
             });
         });
 
+        let dropZone = document.getElementById("dropzone");
         dropZone.addEventListener("dragover", event => {
             event.preventDefault();
         });
@@ -135,29 +129,47 @@
             }
         });
 
-        document.getElementById("checkOrderButton").addEventListener("click", function() {
-            let placedImages = Array.from(dropZone.children).map(img => img.id);
-            console.log("Placed Images:", placedImages);
-            console.log("Expected Order:", correctOrder);
-            if (placedImages.length !== 4) {
-                alert("Try again babi! Arrange all images first.");
-                return;
-            }
-            if (JSON.stringify(placedImages) === JSON.stringify(correctOrder)) {
-                document.getElementById("step2").classList.remove("hidden");
-                setTimeout(() => document.getElementById("step2").classList.add("fade-in"), 50);
+        document.getElementById("resetButton").addEventListener("click", function() {
+            document.getElementById("dragContainer").append(...dropZone.children);
+        });
+
+        document.getElementById("checkYearButton").addEventListener("click", function() {
+            let answer = document.getElementById("yearAnswer").value.trim();
+            if (answer === "2023") {
+                document.getElementById("step3").classList.remove("hidden");
+                setTimeout(() => document.getElementById("step3").classList.add("fade-in"), 50);
             } else {
-                alert("Try again babi! The order is incorrect.");
+                alert("Try again babi!");
             }
         });
 
-        document.getElementById("resetButton").addEventListener("click", function() {
-            dropZone.innerHTML = "";
-            let dragContainer = document.getElementById("dragContainer");
-            document.querySelectorAll(".draggable").forEach(img => {
-                dragContainer.appendChild(img);
-            });
+        document.getElementById("checkNumberButton").addEventListener("click", function() {
+            let answer = document.getElementById("numberAnswer").value.trim();
+            if (answer === "7") {
+                document.getElementById("countdownContainer").classList.remove("hidden");
+                setTimeout(() => document.getElementById("countdownContainer").classList.add("fade-in"), 50);
+                startCountdown();
+            } else {
+                alert("Try again babi!");
+            }
         });
+
+        function startCountdown() {
+            let countdownElement = document.getElementById("countdown");
+            let targetDate = new Date("February 14, 2025 10:00:00").getTime();
+            let interval = setInterval(function() {
+                let now = new Date().getTime();
+                let distance = targetDate - now;
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdownElement.innerHTML = `⏳ ${hours}h ${minutes}m ${seconds}s until the adventure begins!`;
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownElement.innerHTML = "🎉 The treasure hunt begins now! 🎉";
+                }
+            }, 1000);
+        }
     </script>
 </body>
 </html>
