@@ -183,33 +183,18 @@
             }
         });
 
-        function startCountdown() {
-            const eventDate = new Date("February 14, 2025 10:00:00 GMT").getTime();
-            const countdownElement = document.getElementById("countdown");
-            
-            const timer = setInterval(() => {
-                let now = new Date().getTime();
-                let timeLeft = eventDate - now;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    countdownElement.innerHTML = `
-                        💌 Happy Valentine’s Day, my love!  
-                        At 10 AM tomorrow, a secret journey awaits.  
-                        Use this link to find your first clue and the start of a wonderful day together.  
-                        You mean everything to me, and I can’t wait to make this day as special as you are.  
-                        With all my heart,  
-                        Yours forever.
-                    `;
-                } else {
-                    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-                }
-            }, 1000);
-        }
+       function startCountdown() {
+    const countdownElement = document.getElementById("countdown");
+    countdownElement.innerHTML = `
+        💌 Happy Valentine’s Day, my love!  
+        At 10 AM tomorrow, a secret journey awaits.  
+        Use this link to find your first clue and the start of a wonderful day together.  
+        You mean everything to me, and I can’t wait to make this day as special as you are.  
+        With all my heart,  
+        Yours forever.
+    `;
+}
+
     </script>
 </body>
 </html>
