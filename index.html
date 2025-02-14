@@ -274,6 +274,33 @@ function startMiniGames() {
     `;
 }
 
+function checkAnswer1() {
+    let answer = document.getElementById("answer1").value.trim().toLowerCase();
+    if (answer === "m") {
+        document.getElementById("countdown").innerHTML = `
+            <div style="text-align: center; padding: 30px;">
+                <h2 style="color: #ffcccb;">🎟️ Your First Surprise! 🎟️</h2>
+                <p style="font-size: 20px; color: white;">You've unlocked your restaurant booking confirmation. Enjoy your dinner! 💕</p>
+                <img src="https://imgur.com/jSEA67X" width="400" alt="Restaurant Booking Confirmation" style="border-radius: 10px;">
+                <button onclick="startSecondGame()" style="padding: 12px 25px; font-size: 18px; background: #ff6b81; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px;">Continue to the Next Challenge</button>
+            </div>
+        `;
+    } else {
+        alert("Try again! Think carefully! 🧐");
+    }
+}
+
+function startSecondGame() {
+    document.getElementById("countdown").innerHTML = `
+        <div style="text-align: center; padding: 30px;">
+            <h2 style="color: #ffd700;">🌹 Your Flowers Are Waiting! 🌹</h2>
+            <p style="font-size: 20px; color: white;">You've unlocked the location to pick up your flowers! 💖</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2658.2038341618822!2d-2.9843274062885237!3d53.394094139889965!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b219220c8a2b1%3A0xdb21f32db40749e6!2sMary%20Mary%20Floral%20Design%20%7C%20Independent%20Florist%20Liverpool!5e0!3m2!1sen!2s!4v1739521258763!5m2!1sen!2s" width="600" height="450" style="border:0; border-radius: 10px;" allowfullscreen loading="lazy"></iframe>
+        </div>
+    `;
+}
+
+
 
     </script>
 </body>
