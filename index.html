@@ -242,7 +242,63 @@
             `;
             timeRemaining.style.color = "#ffd700";
             timeRemaining.style.textShadow = "4px 4px 12px rgba(255, 215, 0, 1)";
-        } else {
+        } 
+        function startMiniGames() {
+    document.getElementById("countdown").innerHTML = `
+        <div style="text-align: center; padding: 30px;">
+            <h2 style="color: #ffcccb;">🧠 Brain Teaser #1</h2>
+            <p style="font-size: 20px; color: white;">What comes once in a minute, twice in a moment, but never in a thousand years?</p>
+            <input id="answer1" type="text" style="padding: 10px; font-size: 16px; text-align: center;">
+            <button onclick="checkAnswer1()" style="padding: 10px 20px; font-size: 16px; background: #ff6b81; color: white; border: none; border-radius: 8px; cursor: pointer;">Submit</button>
+        </div>
+    `;
+}
+
+function checkAnswer1() {
+    let answer = document.getElementById("answer1").value.trim().toLowerCase();
+    if (answer === "m") {
+        document.getElementById("countdown").innerHTML = `
+            <div style="text-align: center; padding: 30px;">
+                <h2 style="color: #ffcccb;">🎟️ Your First Surprise! 🎟️</h2>
+                <p style="font-size: 20px; color: white;">You've unlocked your restaurant booking confirmation. Enjoy your dinner! 💕</p>
+                <div style="margin: 20px auto; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 15px; box-shadow: 0px 0px 10px rgba(255, 192, 203, 0.8);">
+                    <img src="https://imgur.com/jSEA67X" width="400" alt="Restaurant Booking Confirmation" style="border-radius: 10px;">
+                </div>
+                <button onclick="startSecondGame()" style="padding: 12px 25px; font-size: 18px; background: #ff6b81; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px;">Continue to the Next Challenge</button>
+            </div>
+        `;
+    } else {
+        alert("Try again! Think carefully! 🧐");
+    }
+}
+
+function startSecondGame() {
+    document.getElementById("countdown").innerHTML = `
+        <div style="text-align: center; padding: 30px;">
+            <h2 style="color: #ffcccb;">🌸 Final Challenge: Find Your Flowers 🌸</h2>
+            <p style="font-size: 20px; color: white;">Solve this puzzle and you'll unlock the location to pick up your flowers!</p>
+            <p style="font-size: 20px; color: white; font-style: italic;">I have keys but open no locks. I have space but no room. You can enter but can’t go outside. What am I?</p>
+            <input id="answer2" type="text" style="padding: 10px; font-size: 18px; text-align: center; border-radius: 8px; border: none; box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);">
+            <button onclick="checkAnswer2()" style="padding: 12px 25px; font-size: 18px; background: #ff6b81; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px;">Submit</button>
+        </div>
+    `;
+}
+
+function checkAnswer2() {
+    let answer = document.getElementById("answer2").value.trim().toLowerCase();
+    if (answer === "keyboard") {
+        document.getElementById("countdown").innerHTML = `
+            <div style="text-align: center; padding: 30px;">
+                <h2 style="color: #ffd700;">🌹 Your Flowers Are Waiting! 🌹</h2>
+                <p style="font-size: 20px; color: white;">You've unlocked the location to pick up your flowers! 💖</p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2658.2038341618822!2d-2.9843274062885237!3d53.394094139889965!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b219220c8a2b1%3A0xdb21f32db40749e6!2sMary%20Mary%20Floral%20Design%20%7C%20Independent%20Florist%20Liverpool!5e0!3m2!1sen!2s!4v1739521258763!5m2!1sen!2s" width="600" height="450" style="border:0; border-radius: 10px;" allowfullscreen loading="lazy"></iframe>
+            </div>
+        `;
+    } else {
+        alert("Hmm... that's not quite right. Try again! 🤔");
+    }
+}
+        else {
             let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
