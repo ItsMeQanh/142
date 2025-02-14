@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission LovePossible 💖</title>
+    <title>Valentine's Countdown 💖</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -21,8 +21,6 @@
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
         }
-        .hidden { display: none; opacity: 0; transition: opacity 1s ease-in-out; }
-        .fade-in { opacity: 1 !important; }
         button {
             background-color: #ff6b81;
             color: white;
@@ -44,33 +42,11 @@
             font-size: 16px;
             text-align: center;
         }
-        .draggable {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            cursor: grab;
-            border-radius: 10px;
-            border: 3px solid #ff6b81;
-        }
-        .dropzone {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            width: 650px;
-            height: 150px;
-            background: white;
-            align-items: center;
-            border-radius: 10px;
-            border: 3px dashed #ff6b81;
-            padding: 10px;
-        }
         #countdown {
             font-size: 40px;
             font-weight: bold;
             margin-top: 20px;
-            color: yellow;
+            color: black;
             animation: pulse 1s infinite alternate;
         }
         @keyframes pulse {
@@ -81,227 +57,82 @@
 </head>
 <body>
     <div class="container">
-        <h1>🌹 Mission LovePossible 🌹</h1>
-        <button id="startButton">Start Mission</button>
-        
-        <!-- Step 1 -->
-        <div id="step1" class="hidden">
-            <h2>🧩 Arrange the Memories in Order</h2>
-            <p>Drag the images to arrange them from <strong>earliest to most recent</strong>.</p>
-            <div class="drag-container" id="dragContainer">
-                <img src="https://i.imgur.com/CbSEc2K.jpg" class="draggable" draggable="true" id="img2">
-                <img src="https://i.imgur.com/ElyoeuY.jpg" class="draggable" draggable="true" id="img4">
-                <img src="https://i.imgur.com/EaXm3NR.jpg" class="draggable" draggable="true" id="img1">
-                <img src="https://i.imgur.com/vzTHQ6x.jpg" class="draggable" draggable="true" id="img3">
-            </div>
-            <div class="dropzone" id="dropzone"></div>
-            <button id="checkOrderButton">Check Order</button>
-            <button id="resetButton">Retry</button>
-        </div>
-        
-        <!-- Step 2 -->
-        <div id="step2" class="hidden">
-            <h2>🔢 Answer the Riddle</h2>
-            <p>What year did our love start?</p>
-            <input type="text" id="yearAnswer" placeholder="Enter the year">
-            <button id="checkYearButton">Submit</button>
-        </div>
-
-        <!-- Step 3 -->
-        <div id="step3" class="hidden">
-            <p>What’s the best number to go with 23?</p>
-            <input type="text" id="numberAnswer" placeholder="Enter the number">
-            <button id="checkNumberButton">Submit</button>
-        </div>
-
-        <!-- Countdown -->
-        <div id="countdownContainer" class="hidden">
+        <h1>💖 Valentine's Surprise 💖</h1>
+        <div id="countdownContainer">
             <h2>⏳ Countdown to 10 AM Liverpool Time</h2>
             <p id="countdown">Loading...</p>
         </div>
     </div>
-    
+
     <script>
-        // Step 1 Script
-        document.getElementById("startButton").addEventListener("click", function() {
-            document.getElementById("step1").classList.remove("hidden");
-            setTimeout(() => document.getElementById("step1").classList.add("fade-in"), 50);
-        });
+        function startCountdown() {
+            const eventDate = new Date("February 14, 2025 09:39:00 GMT").getTime();
+            const countdownElement = document.getElementById("countdown");
 
-        let draggedItem = null;
-        document.querySelectorAll(".draggable").forEach(img => {
-            img.addEventListener("dragstart", event => {
-                draggedItem = event.target;
-                event.dataTransfer.setData("text", event.target.id);
-            });
-        });
+            const timer = setInterval(() => {
+                let now = new Date().getTime();
+                let timeLeft = eventDate - now;
 
-        let dropZone = document.getElementById("dropzone");
-        dropZone.addEventListener("dragover", event => {
-            event.preventDefault();
-        });
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    countdownElement.innerHTML = `🎉 The Moment Has Arrived! Click to begin! 💖`;
+                    countdownElement.style.color = "#ff6b81"; 
+                    
+                    setTimeout(startMiniGames, 2000);
+                } else {
+                    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-        dropZone.addEventListener("drop", event => {
-            event.preventDefault();
-            let droppedId = event.dataTransfer.getData("text");
-            let droppedItem = document.getElementById(droppedId);
-            if (droppedItem) {
-                dropZone.appendChild(droppedItem);
-            }
-        });
+                    countdownElement.innerHTML = `
+                        <span style="color: #ff4747; font-weight: bold;">${hours}</span>h  
+                        <span style="color: #ffcc00; font-weight: bold;">${minutes}</span>m  
+                        <span style="color: #ff1493; font-weight: bold;">${seconds}</span>s  
+                    `;
+                }
+            }, 1000);
+        }
 
-        document.getElementById("checkOrderButton").addEventListener("click", function() {
-            let correctOrder = ["img1", "img2", "img3", "img4"];
-            let placedImages = Array.from(dropZone.children).map(img => img.id);
-            if (JSON.stringify(placedImages) === JSON.stringify(correctOrder)) {
-                document.getElementById("step2").classList.remove("hidden");
-                setTimeout(() => document.getElementById("step2").classList.add("fade-in"), 50);
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-        // Step 2 and 3 Script
-        document.getElementById("checkYearButton").addEventListener("click", function() {
-            let answer = document.getElementById("yearAnswer").value.trim();
-            if (answer === "2023") {
-                document.getElementById("step3").classList.remove("hidden");
-                setTimeout(() => document.getElementById("step3").classList.add("fade-in"), 50);
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-        document.getElementById("checkNumberButton").addEventListener("click", function() {
-            let answer = document.getElementById("numberAnswer").value.trim();
-            if (answer === "7") {
-                document.getElementById("countdownContainer").classList.remove("hidden");
-                setTimeout(() => document.getElementById("countdownContainer").classList.add("fade-in"), 50);
-                startCountdown();
-            } else {
-                alert("Try again babi!");
-            }
-        });
-
-      function startCountdown() {
-    const eventDate = new Date("February 14, 2025 09:18:00 GMT").getTime();
-    const countdownElement = document.getElementById("countdown");
-
-    // Heartfelt and refined message for Valentine's Day
-    countdownElement.innerHTML = `
-        <div style="text-align: center; padding: 30px; position: relative;">
-            <p style="font-size: 32px; font-weight: bold; color: #ffcccb; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);">
-                💖 It's Valentine's Day! 💖
-            </p>
-            <p style="font-size: 22px; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); max-width: 600px; margin: auto;">
-                
-                💕 I’ve made a little something just for you. I hope today fills your heart with warmth, joy, and laughter.
-                Even though we’re apart, know that you’re always on my mind. Stay convivial, joyous, and may life always bring you happiness and luck.
-                You mean the world to me, and I hope this brings a smile to your day. 💕
-             💕
-                Tom 💕
-            </p>
-            
-            <div style="margin-top: 30px; display: flex; justify-content: center; align-items: center;">
-                <div id="countdown-box" style="
-                    background: rgba(255, 255, 255, 0.2);
-                    padding: 20px 30px;
-                    border-radius: 20px;
-                    display: inline-block;
-                    text-align: center;
-                    box-shadow: 0px 0px 15px rgba(255, 105, 180, 0.8);
-                    position: relative;
-                    overflow: hidden;
-                ">
-                    <p style="font-size: 24px; color: #ffcccb; font-style: italic; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">
-                        ⏳ Counting Down to Your Surprise ⏳
-                    </p>
-                    <p id="timeRemaining" style="
-                        font-size: 50px; 
-                        font-weight: bold; 
-                        color: #ffd700; 
-                        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
-                    "></p>
+        function startMiniGames() {
+            document.getElementById("countdownContainer").innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <h2 style="color: #ffcccb;">🧠 Brain Teaser #1</h2>
+                    <p style="font-size: 20px; color: white;">What comes once in a minute, twice in a moment, but never in a thousand years?</p>
+                    <input id="answer1" type="text" style="padding: 10px; font-size: 16px; text-align: center;">
+                    <button onclick="checkAnswer1()" style="padding: 10px 20px; font-size: 16px; background: #ff6b81; color: white; border: none; border-radius: 8px; cursor: pointer;">Submit</button>
                 </div>
-            </div>
-        </div>
-    `;
+            `;
+        }
 
-    const timeRemaining = document.getElementById("timeRemaining");
+        function checkAnswer1() {
+            let answer = document.getElementById("answer1").value.trim().toLowerCase();
+            if (answer === "m") {
+                document.getElementById("countdownContainer").innerHTML = `
+                    <div style="text-align: center; padding: 30px;">
+                        <h2 style="color: #ffcccb;">🎟️ Your First Surprise! 🎟️</h2>
+                        <p style="font-size: 20px; color: white;">I reserved a place for you here. Please come and dine at 12:00, and I'll pay for the bill later! 💕</p>
+                        <img src="https://imgur.com/jSEA67X.jpg" width="400" alt="Restaurant Booking Confirmation" style="border-radius: 10px;">
+                        <p><a href="https://maps.app.goo.gl/Ztmc1q1YJda6amjR6" target="_blank" style="color: #ffffff; font-weight: bold; text-decoration: underline;">🌍 Click here for restaurant location 🌍</a></p>
+                        <button onclick="startSecondGame()" style="padding: 12px 25px; font-size: 18px; background: #ff6b81; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px;">Next Challenge</button>
+                    </div>
+                `;
+            } else {
+                alert("Try again! Think carefully! 🧐");
+            }
+        }
 
-    // Soft glowing animation effect for the countdown box
-    document.getElementById("countdown-box").style.animation = "pulse 1.5s infinite alternate";
+        function startSecondGame() {
+            document.getElementById("countdownContainer").innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <h2 style="color: #ffd700;">🌹 Your Flowers Are Waiting! 🌹</h2>
+                    <p style="font-size: 20px; color: white;">There's a store near your restaurant. Please come and pick the flower up after lunch! 💖</p>
+                    <img src="https://imgur.com/rsR8Dnx.jpg" width="400" alt="Flower Shop" style="border-radius: 10px;">
+                    <p><a href="https://maps.app.goo.gl/5GhGLMvPdR2hNXoa6" target="_blank" style="color: #ffffff; font-weight: bold; text-decoration: underline;">🌸 Click here for flower shop location 🌸</a></p>
+                </div>
+            `;
+        }
 
-    // Countdown logic
-    const timer = setInterval(() => {
-    let now = new Date().getTime();
-    let timeLeft = eventDate - now;
-
-    if (timeLeft <= 0) {
-        clearInterval(timer);
-        timeRemaining.innerHTML = `
-            🎉 The Moment Has Arrived! Click to see what’s waiting for you! 💖
-        `;
-        timeRemaining.style.color = "#ff4444"; // Change from yellow to bright red
-        timeRemaining.style.textShadow = "4px 4px 12px rgba(255, 68, 68, 1)";
-
-        // Ensure mini-games start correctly
-        setTimeout(startMiniGames, 2000);
-    } else {
-        let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-        timeRemaining.innerHTML = `
-            <span style="color: #ff4747; font-weight: bold;">${hours}</span>h  
-            <span style="color: #ffcc00; font-weight: bold;">${minutes}</span>m  
-            <span style="color: #ff1493; font-weight: bold;">${seconds}</span>s  
-        `;
-    }
-}, 1000); // ⬅️ THIS MUST CLOSE PROPERLY HERE
-} // ⬅️ CLOSE THE FUNCTION `startCountdown()` CORRECTLY
-
-// ✅ Mini-Games Start Here
-function startMiniGames() {
-    document.getElementById("countdownContainer").classList.add("hidden"); // Hide countdown
-    document.getElementById("countdown").innerHTML = `
-        <div style="text-align: center; padding: 30px;">
-            <h2 style="color: #ffcccb;">🧠 Brain Teaser #1</h2>
-            <p style="font-size: 20px; color: white;">What comes once in a minute, twice in a moment, but never in a thousand years?</p>
-            <input id="answer1" type="text" style="padding: 10px; font-size: 16px; text-align: center;">
-            <button onclick="checkAnswer1()" style="padding: 10px 20px; font-size: 16px; background: #ff6b81; color: white; border: none; border-radius: 8px; cursor: pointer;">Submit</button>
-        </div>
-    `;
-}
-
-function checkAnswer1() {
-    let answer = document.getElementById("answer1").value.trim().toLowerCase();
-    if (answer === "m") {
-        document.getElementById("countdown").innerHTML = `
-            <div style="text-align: center; padding: 30px;">
-                <h2 style="color: #ffcccb;">🎟️ Your First Surprise! 🎟️</h2>
-                <p style="font-size: 20px; color: white;">You've unlocked your restaurant booking confirmation. Enjoy your dinner! 💕</p>
-                <img src="https://imgur.com/jSEA67X" width="400" alt="Restaurant Booking Confirmation" style="border-radius: 10px;">
-                <button onclick="startSecondGame()" style="padding: 12px 25px; font-size: 18px; background: #ff6b81; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px;">Continue to the Next Challenge</button>
-            </div>
-        `;
-    } else {
-        alert("Try again! Think carefully! 🧐");
-    }
-}
-
-function startSecondGame() {
-    document.getElementById("countdown").innerHTML = `
-        <div style="text-align: center; padding: 30px;">
-            <h2 style="color: #ffd700;">🌹 Your Flowers Are Waiting! 🌹</h2>
-            <p style="font-size: 20px; color: white;">You've unlocked the location to pick up your flowers! 💖</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2658.2038341618822!2d-2.9843274062885237!3d53.394094139889965!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b219220c8a2b1%3A0xdb21f32db40749e6!2sMary%20Mary%20Floral%20Design%20%7C%20Independent%20Florist%20Liverpool!5e0!3m2!1sen!2s!4v1739521258763!5m2!1sen!2s" width="600" height="450" style="border:0; border-radius: 10px;" allowfullscreen loading="lazy"></iframe>
-        </div>
-    `;
-}
-
-
-
+        startCountdown();
     </script>
 </body>
 </html>
