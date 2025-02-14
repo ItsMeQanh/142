@@ -187,51 +187,50 @@
     const eventDate = new Date("February 14, 2025 10:00:00 GMT").getTime();
     const countdownElement = document.getElementById("countdown");
 
-    // Updated contrast-friendly romantic UI
+    // Updated heartfelt message and refined romantic UI
     countdownElement.innerHTML = `
         <div style="text-align: center; padding: 30px; position: relative;">
-            <p style="font-size: 28px; font-weight: bold; color: #ffd700; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);">
-                💖 The Most Beautiful Moment is Coming...  
+            <p style="font-size: 30px; font-weight: bold; color: #ffcccb; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);">
+                💖 Happy Valentine’s Day, My Love 💖
             </p>
-            <p style="font-size: 20px; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); max-width: 600px; margin: auto;">
-                At <span style="color: #ffcccb; font-weight: bold;">10 AM tomorrow</span>, the journey begins.  
-                I have prepared something special just for you.  
-                **Come back here when the time arrives!**  
+            <p style="font-size: 22px; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); max-width: 600px; margin: auto;">
+                Today is a special day, and even though we're apart,  
+                I wanted to prepare a little something for you.  
+                I hope this warms your heart and makes your Valentine’s Day a little brighter.  
+                Keep shining, keep learning, and keep being amazing.  
             </p>
             
             <div style="margin-top: 30px; display: flex; justify-content: center; align-items: center;">
                 <div id="countdown-box" style="
-                    background: rgba(0, 0, 0, 0.2);
+                    background: rgba(255, 255, 255, 0.2);
                     padding: 20px 30px;
                     border-radius: 20px;
                     display: inline-block;
                     text-align: center;
-                    box-shadow: 0px 0px 12px rgba(255, 192, 203, 0.8);
+                    box-shadow: 0px 0px 15px rgba(255, 105, 180, 0.8);
                     position: relative;
                     overflow: hidden;
                 ">
-                    <p style="font-size: 22px; color: #ffd700; font-style: italic; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">
-                        🌟 Countdown to Our Special Moment 🌟
+                    <p style="font-size: 24px; color: #ffcccb; font-style: italic; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">
+                        ⏳ Counting Down to Your Surprise ⏳
                     </p>
                     <p id="timeRemaining" style="
                         font-size: 50px; 
                         font-weight: bold; 
-                        color: #ffffff; 
+                        color: #ffd700; 
                         text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
                     "></p>
                 </div>
             </div>
 
-            <p style="font-size: 18px; color: #ffffff; font-weight: bold; margin-top: 30px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">
-                **This page will be your gateway to a magical surprise...**  
+            <p style="font-size: 20px; color: #ffffff; font-weight: bold; margin-top: 30px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">
+                When the time arrives, something special awaits you.  
+                **I can’t wait for you to see it!**  
             </p>
             
             <div style="margin-top: 20px;">
                 <p style="font-size: 18px; color: #ffd700; font-weight: bold;">
-                    **Your Special Link (Come Back Here at 10 AM!)**
-                </p>
-                <p style="font-size: 16px;">
-                    <a href="#" style="color: #ffcccb; font-weight: bold; text-decoration: underline;">This is your link</a>
+                    **Come back at 10 AM to reveal your surprise!**
                 </p>
             </div>
         </div>
@@ -239,7 +238,7 @@
 
     const timeRemaining = document.getElementById("timeRemaining");
 
-    // Glowing animation effect (subtle pulsing)
+    // Soft glowing animation effect for the countdown box
     document.getElementById("countdown-box").style.animation = "pulse 1.5s infinite alternate";
 
     // Countdown logic
@@ -250,25 +249,24 @@
         if (timeLeft <= 0) {
             clearInterval(timer);
             timeRemaining.innerHTML = `
-                🎉 The Moment Has Arrived! Click the link above to begin your journey! 💖
+                🎉 The Moment Has Arrived! Click to see what’s waiting for you! 💖
             `;
             timeRemaining.style.color = "#ffd700";
             timeRemaining.style.textShadow = "4px 4px 12px rgba(255, 215, 0, 1)";
         } else {
-            let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
             timeRemaining.innerHTML = `
-                <span style="color: #ff4747; font-weight: bold;">${days}</span>d  
-                <span style="color: #ffcc00; font-weight: bold;">${hours}</span>h  
-                <span style="color: #ff9f00; font-weight: bold;">${minutes}</span>m  
+                <span style="color: #ff4747; font-weight: bold;">${hours}</span>h  
+                <span style="color: #ffcc00; font-weight: bold;">${minutes}</span>m  
                 <span style="color: #ff1493; font-weight: bold;">${seconds}</span>s  
             `;
         }
     }, 1000);
 }
+
 
 
 
