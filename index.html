@@ -234,33 +234,34 @@
 
     // Countdown logic
     const timer = setInterval(() => {
-        let now = new Date().getTime();
-        let timeLeft = eventDate - now;
+    let now = new Date().getTime();
+    let timeLeft = eventDate - now;
 
-        if (timeLeft <= 0) {
-    clearInterval(timer);
-    timeRemaining.innerHTML = `
-        🎉 The Moment Has Arrived! Click to see what’s waiting for you! 💖
-    `;
-    timeRemaining.style.color = "#ffd700";
-    timeRemaining.style.textShadow = "4px 4px 12px rgba(255, 215, 0, 1)";
+    if (timeLeft <= 0) {
+        clearInterval(timer);
+        timeRemaining.innerHTML = `
+            🎉 The Moment Has Arrived! Click to see what’s waiting for you! 💖
+        `;
+        timeRemaining.style.color = "#ff4444"; // Change from yellow to bright red
+        timeRemaining.style.textShadow = "4px 4px 12px rgba(255, 68, 68, 1)";
 
-    // Wait 2 seconds, then start the mini-games
-    setTimeout(startMiniGames, 2000);
-} else {
-    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        // Ensure mini-games start correctly
+        setTimeout(startMiniGames, 2000);
+    } else {
+        let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    timeRemaining.innerHTML = `
-        <span style="color: #ff4747; font-weight: bold;">${hours}</span>h  
-        <span style="color: #ffcc00; font-weight: bold;">${minutes}</span>m  
-        <span style="color: #ff1493; font-weight: bold;">${seconds}</span>s  
-    `;
-        }
-    }, 1000);
-}
-        
+        timeRemaining.innerHTML = `
+            <span style="color: #ff4747; font-weight: bold;">${hours}</span>h  
+            <span style="color: #ffcc00; font-weight: bold;">${minutes}</span>m  
+            <span style="color: #ff1493; font-weight: bold;">${seconds}</span>s  
+        `;
+    }
+}, 1000); // ⬅️ THIS MUST CLOSE PROPERLY HERE
+} // ⬅️ CLOSE THE FUNCTION `startCountdown()` CORRECTLY
+
+// ✅ Mini-Games Start Here
 function startMiniGames() {
     document.getElementById("countdownContainer").classList.add("hidden"); // Hide countdown
     document.getElementById("countdown").innerHTML = `
@@ -269,32 +270,6 @@ function startMiniGames() {
             <p style="font-size: 20px; color: white;">What comes once in a minute, twice in a moment, but never in a thousand years?</p>
             <input id="answer1" type="text" style="padding: 10px; font-size: 16px; text-align: center;">
             <button onclick="checkAnswer1()" style="padding: 10px 20px; font-size: 16px; background: #ff6b81; color: white; border: none; border-radius: 8px; cursor: pointer;">Submit</button>
-        </div>
-    `;
-}
-
-function checkAnswer1() {
-    let answer = document.getElementById("answer1").value.trim().toLowerCase();
-    if (answer === "m") {
-        document.getElementById("countdown").innerHTML = `
-            <div style="text-align: center; padding: 30px;">
-                <h2 style="color: #ffcccb;">🎟️ Your First Surprise! 🎟️</h2>
-                <p style="font-size: 20px; color: white;">You've unlocked your restaurant booking confirmation. Enjoy your dinner! 💕</p>
-                <img src="https://imgur.com/jSEA67X" width="400" alt="Restaurant Booking Confirmation" style="border-radius: 10px;">
-                <button onclick="startSecondGame()" style="padding: 12px 25px; font-size: 18px; background: #ff6b81; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px;">Continue to the Next Challenge</button>
-            </div>
-        `;
-    } else {
-        alert("Try again! Think carefully! 🧐");
-    }
-}
-
-function startSecondGame() {
-    document.getElementById("countdown").innerHTML = `
-        <div style="text-align: center; padding: 30px;">
-            <h2 style="color: #ffd700;">🌹 Your Flowers Are Waiting! 🌹</h2>
-            <p style="font-size: 20px; color: white;">You've unlocked the location to pick up your flowers! 💖</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2658.2038341618822!2d-2.9843274062885237!3d53.394094139889965!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487b219220c8a2b1%3A0xdb21f32db40749e6!2sMary%20Mary%20Floral%20Design%20%7C%20Independent%20Florist%20Liverpool!5e0!3m2!1sen!2s!4v1739521258763!5m2!1sen!2s" width="600" height="450" style="border:0; border-radius: 10px;" allowfullscreen loading="lazy"></iframe>
         </div>
     `;
 }
